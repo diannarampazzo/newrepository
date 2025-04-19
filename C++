@@ -1,0 +1,57 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+void cadastrarUsuario() {
+    string usuario, senha;
+    cout << "Novo usuário: ";
+    cin >> usuario;
+    cout << "Senha: ";
+    cin >> senha;
+
+    ofstream arquivo("usuarios.txt", ios::app);
+    arquivo << usuario << " " << senha << endl;
+    arquivo.close();
+
+    cout << "Usuário cadastrado com sucesso!\n";
+}
+
+void fazerLogin() {
+    string usuario, senha, u, s;
+    bool encontrado = false;
+
+    cout << "Usuário: ";
+    cin >> usuario;
+    cout << "Senha: ";
+    cin >> senha;
+
+    ifstream arquivo("usuarios.txt");
+    while (arquivo >> u >> s) {
+        if (u == usuario && s == senha) {
+            encontrado = true;
+            break;
+        }
+    }
+    arquivo.close();
+
+    if (encontrado)
+        cout << "Login bem-sucedido!\n";
+    else
+        cout << "Usuário ou senha incorretos.\n";
+}
+
+int main() {
+    int opcao;
+    cout << "1 - Cadastrar\n2 - Login\nEscolha: ";
+    cin >> opcao;
+
+    if (opcao == 1)
+        cadastrarUsuario();
+    else if (opcao == 2)
+        fazerLogin();
+    else
+        cout << "Opção inválida.\n";
+
+    return 0;
+}
